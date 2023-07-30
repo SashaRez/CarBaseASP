@@ -1,0 +1,45 @@
+﻿@model CarBaseFinal.Models.SaleModel
+
+@{
+    ViewData["Title"] = "Продажи";
+}
+
+<h3>Продажи</h3>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th><p>OrderID</p></th>
+            <th><p>ClientID</p></th>
+            <th><p>Mark</p></th>
+            <th><p>Model</p></th>
+            <th><p>Type</p></th>
+            <th><p>Color</p></th>
+            <th><p>Price</p></th>
+            <th><p>ClientName</p></th>
+            <th><p>ClientPhone</p></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var saleDetail in Model.SaleDetailList!)
+        {
+            <tr>
+                <td>@saleDetail.OrderID</td>
+                <td>@saleDetail.ClientID</td>
+                <td>@saleDetail.Mark</td>
+                <td>@saleDetail.Model</td>
+                <td>@saleDetail.Type</td>
+                <td>@saleDetail.Color</td>
+                <td>@saleDetail.Price</td>
+                <td>@saleDetail.ClientName</td>
+                <td>@saleDetail.ClientPhone</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

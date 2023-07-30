@@ -1,0 +1,61 @@
+﻿@model CarBaseFinal.Models.KorzinaModel
+
+@{
+    ViewData["Title"] = "Автосалон";
+}
+
+
+<form method="post" action="">
+    <table>
+
+
+        <h2>
+            Добавление в корзину
+        </h2>
+
+        @foreach (var car in Model.KorzinaDetailList!)
+        {
+
+            <tr>
+                <td><p>CarID:  </p></td>
+                <td><input type="text" value="@car.CarID" name="CarID" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Mark </p></td>
+                <td><input type="text" value="@car.Mark" name="Mark" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Model</p></td>
+                <td> <input type="text" value="@car.Model" name="Model" />  </td>
+            </tr>
+
+             <tr>
+                <td><p>Type</p></td>
+                <td> <input type="text" value="@car.Type" name="Type" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Color</p></td>
+                <td> <input type="text" value="@car.Color" name="Color" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Kol</p></td>
+                <td> <input type="text" value="" name="Kol" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Price</p></td>
+                <td> <input type="text" value="@car.Price" name="Price" /> </td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Отправить" /> </td>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+</form>

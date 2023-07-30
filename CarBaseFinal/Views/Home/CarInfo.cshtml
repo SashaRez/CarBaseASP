@@ -1,0 +1,12 @@
+﻿@model CarBaseFinal.Data.Car
+
+<h2>@Model.Mark</h2>
+<p>Модель: @Model.Model</p>
+<p>Тип кузова: @Model.Type</p>
+<p>Цвет автомобиля: @Model.Color</p>
+<p>Стоимость автомобиля: @Model.Price</p>
+<img src="~/img/@(Model.Mark?.ToLower().Trim())-@(Model.Model?.ToLower().Trim()).jpg" alt="@Model.Mark"  width="400" height="200"/>
+
+
+
+

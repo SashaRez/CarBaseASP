@@ -1,0 +1,62 @@
+﻿@model CarBaseFinal.Models.AllOrdersModel
+
+@{
+    ViewData["Title"] = "Заказы";
+}
+
+<h3>Заказы</h3>
+
+
+<table id ="orderTable" name="orders" class="table table-bordered">
+    <thead>
+        <tr>
+            <th><p>OrderID</p></th>
+            <th><p>CarID</p></th>
+            <th><p>ClientID</p></th>
+            <th><p>ClientName</p></th>
+            <th><p>ClientPhone</p></th>
+            <th><p></p></th>
+            <th><p></p></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var orderDetail in Model.AllOrdersDetailList!)
+        {
+            <tr>
+                <td>@orderDetail.OrderID</td>
+                <td>@orderDetail.CarID</td>
+                <td>@orderDetail.ClientID</td>
+                <td>@orderDetail.ClientName</td>
+                <td>@orderDetail.ClientPhone</td>
+
+                <td>
+                    <a id="buttonPay-@orderDetail.OrderID" class="btn btn-success" asp-action="PayOrder" asp-route-Id="@orderDetail.OrderID">
+                        Оплатить заказ
+                    </a>
+                </td>
+
+
+
+                <td>
+                    <form method="post" asp-action="DeleteFromOrders" asp-route-id="@orderDetail.OrderID">
+                        <button type="submit" class="btn btn-danger">Отменить заказ</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>
+
+
+
+</script>
+
+

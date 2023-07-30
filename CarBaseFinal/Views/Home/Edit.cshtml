@@ -1,0 +1,48 @@
+﻿@model CarBaseFinal.Models.CarModel
+
+@{
+    ViewData["Title"] = "Автосалон";
+}
+
+
+<form method="post" action="">
+    <table>
+
+        @foreach (var car in Model.CarDetailList!)
+        {
+
+            <h3>Автомобиль: @car.CarID </h3>
+
+            <tr>
+                <td><p>TypeID:  </p></td>
+                <td><input type="text" value="@car.TypeID" name="TypeID" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>MarkID </p></td>
+                <td><input type="text" value="@car.MarkID" name="MarkID" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Model</p></td>
+                <td> <input type="text" value="@car.Model" name="Model" />  </td>
+            </tr>
+
+            <tr>
+                <td><p>Color</p></td>
+                <td> <input type="text" value="@car.Color" name="Color" /> </td>
+            </tr>
+
+            <tr>
+                <td><p>Price</p></td>
+                <td> <input type="text" value="@car.Price" name="Price" /> </td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Отправить" /> </td>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+</form>

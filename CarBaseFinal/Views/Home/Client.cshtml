@@ -1,0 +1,33 @@
+﻿@model CarBaseFinal.Models.ClientModel
+
+@{
+    ViewData["Title"] = "Клиенты";
+}
+
+<h3>Клиенты</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th><p>ClientID</p></th>
+            <th><p>ClientName</p></th>
+            <th><p>ClientPhone</p></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var clientDetail in Model.ClientDetailList!)
+        {
+            <tr>
+                <td>@clientDetail.ClientID</td>
+                <td>@clientDetail.ClientName</td>
+                <td>@clientDetail.ClientPhone</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+

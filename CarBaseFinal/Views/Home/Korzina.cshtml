@@ -1,0 +1,157 @@
+﻿@model CarBaseFinal.Models.KorzinaModel
+
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+<h3>Корзина</h3>
+
+<form method="get" action="@Url.Action("Korzina", "Home")">
+    <div class="form-inline">
+        <label class="control-label" id="marksName">Марки: </label>
+        <select name="selectedMark" id="selectMark" class="form-control select-inline">
+            <option value="Все марки" selected>Все марки</option>
+            @{
+                var marks = Model.KorzinaDetailList?.Select(car => car.Mark).Distinct().ToList();
+                @foreach (var item in marks!)
+                {
+                    <option value="@item?.Trim()">@item?.Trim()</option>
+                }
+            }
+        </select>
+
+        <label class="control-label" id="typeName" style="display:none">Типы кузова: </label>
+
+        <select name="selectedType" id="selectType" style="display:none" class="form-control select-inline">
+            <option value="Все типы" selected>Все типы</option>
+            @{
+                var types = Model.KorzinaDetailList?.Select(car => car.Type).Distinct().ToList();
+                @foreach (var item in types!)
+                {
+                    <option value="@item?.Trim()">@item?.Trim()</option>
+                }
+            }
+        </select>
+        <button type="submit" id="submitButton" hidden>Отправить</button>
+    </div>
+</form>
+
+<br />
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th><p>CarID</p></th>
+            <th><p>Mark</p></th>
+            <th><p>Model</p></th>
+            <th><p>Type</p></th>
+            <th><p>Color</p></th>
+            <th><p>Kol</p></th>
+            <th><p>Price</p></th>
+            <th><p></p></th>
+            <th><p></p></th>
+        </tr>
+    </thead>
+
+
+    @{
+        decimal sum = 0;
+    }
+
+    <tbody>
+
+        @foreach (var korzinaDetail in Model.KorzinaDetailList!)
+        {
+            <tr>
+                <td>@korzinaDetail.CarID</td>
+                <td>@korzinaDetail.Mark</td>
+                <td>@korzinaDetail.Model</td>
+                <td>@korzinaDetail.Type</td>
+                <td>@korzinaDetail.Color</td>
+                <td>@korzinaDetail.Kol</td>
+                <td>@korzinaDetail.Price</td>
+
+                @{
+                    sum += korzinaDetail.Price;
+                }
+
+
+                <td>
+                    <a class="btn btn-success" asp-action="MakeOrder" asp-route-Id="@korzinaDetail.CarID">
+                        Заказать
+                    </a>
+                </td>
+
+
+
+                <td>
+                    <form method="post" asp-action="DeleteFromKorzina" asp-route-id="@korzinaDetail.CarID">
+                        <button type="submit" class="btn btn-danger">Удалить с корзины</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<label class="control-label" id="AllCount">Общая сумма: @sum ₽</label>
+
+
+<script>
+
+    var markSelect = document.getElementById('selectMark');
+    var submitButton = document.getElementById('submitButton');
+
+    var selectType = document.getElementById('selectType');
+    var typeName = document.getElementById('typeName');
+
+    if (localStorage.getItem('selectedMark')) {
+        markSelect.value = localStorage.getItem('selectedMark');
+    }
+
+
+    if (localStorage.getItem('selectedType')) {
+
+        selectType.value = localStorage.getItem('selectedType');
+
+        if (selectType.value == "") {
+            selectType.selectedIndex = 0;
+        }
+
+        typeName.style.display = "block";
+        selectType.style.display = "block";
+
+    } else {
+        selectType.style.display = "none";
+        typeName.style.display = "none";
+    }
+
+
+
+    markSelect.addEventListener("change", function () {
+
+        localStorage.setItem('selectedMark', event.target.value);
+
+        if (event.target.selectedIndex == 0) {
+            selectType.selectedIndex = 0;
+            localStorage.removeItem('selectedType');
+        }
+
+        else if (event.target.selectedIndex != 0) {
+            localStorage.setItem('selectedType', event.target.value);
+        }
+
+        submitButton.click();
+    });
+
+    selectType.addEventListener("change", function () {
+
+        localStorage.setItem('selectedType', event.target.value);
+        submitButton.click();
+    });
+
+
+</script>

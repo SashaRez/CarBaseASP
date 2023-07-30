@@ -1,0 +1,165 @@
+﻿@model CarBaseFinal.Models.CarModel
+
+@{
+    ViewData["Title"] = "Автосалон";
+}
+
+
+<h3>Автосалон</h3>
+
+
+<form method="get" action="@Url.Action("Index", "Home")">
+    <div class="form-inline">
+        <label class="control-label" id="marksName">Марки: </label>
+        <select name="selectedMark" id="selectMark" class="form-control select-inline">
+            <option value="Все марки" selected>Все марки</option>
+            @{
+                var marks = Model.CarDetailList?.Select(car => car.Mark).Distinct().ToList();
+                @foreach (var item in marks!)
+                {
+                    <option value="@item?.Trim()">@item?.Trim()</option>
+                }
+            }
+        </select>
+
+        <label class="control-label" id="typeName" style="display:none">Типы кузова: </label>
+
+        <select name="selectedType" id="selectType" style="display:none" class="form-control select-inline">
+            <option value="Все типы" selected>Все типы</option>
+            @{
+                var types = Model.CarDetailList?.Select(car => car.Type).Distinct().ToList();
+                @foreach (var item in types!)
+                {
+                    <option value="@item?.Trim()">@item?.Trim()</option>
+                }
+            }
+        </select>
+        <button type="submit" id="submitButton" hidden>Отправить</button>
+    </div>
+</form>
+
+<br />
+
+ <table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th><p>CarID</p></th>
+            <th><p>Type</p></th>
+            <th><p>Mark</p></th>
+            <th><p>Model</p></th>
+            <th><p>Color</p></th>
+            <th><p>Price</p></th>
+            <th><p>TypeID</p></th>
+            <th><p>MarkID</p></th>
+            <th><p></p></th>
+            <th><p></p></th>
+            <th><p></p></th>
+        </tr>
+     </thead>
+
+      <tbody>
+ 
+            @foreach (var car in Model.CarDetailList!)
+            {
+            <tr>
+                <td>
+                    <a href="@Url.Action("CarInfo", "Home", new { id = car.CarID })">@car.CarID</a>
+                </td>
+
+                <td>@car.Type</td>
+                <td>@car.Mark</td>
+                <td>@car.Model</td>
+                <td>@car.Color</td>
+                <td>@car.Price</td>
+                <td>@car.TypeID</td>
+                <td>@car.MarkID</td>
+
+                <td>
+                    <a class="btn btn-success" asp-action="AddToKorzina" asp-route-Id="@car.CarID">
+                        В корзину
+                    </a>
+                </td>
+
+
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-Id="@car.CarID">
+                        Редактировать
+                    </a>
+                </td>
+
+
+                <td>
+                    <form method="post" asp-action="Delete" asp-route-id="@car.CarID">
+                            <button type="submit" class="btn btn-danger">Удалить </button>
+                    </form>
+                </td>
+            </tr>
+            }
+
+      </tbody>
+</table>
+
+<a class="btn btn-outline-success" asp-action="AddCar">
+    Добавить машину
+</a>
+
+
+<script>
+
+    var markSelect = document.getElementById('selectMark');
+    var submitButton = document.getElementById('submitButton');
+
+    var selectType = document.getElementById('selectType');
+    var typeName = document.getElementById('typeName');
+
+    if (localStorage.getItem('selectedMark')) {
+        markSelect.value = localStorage.getItem('selectedMark');
+    }
+
+
+    if (localStorage.getItem('selectedType')) {
+
+        selectType.value = localStorage.getItem('selectedType');
+
+        if (selectType.value == "") {
+            selectType.selectedIndex = 0;
+        }
+
+        typeName.style.display = "block";
+        selectType.style.display = "block";
+
+    } else {
+        selectType.style.display = "none";
+        typeName.style.display = "none";
+    }
+
+
+
+    markSelect.addEventListener("change", function () {
+
+        localStorage.setItem('selectedMark', event.target.value);
+
+        if (event.target.selectedIndex == 0){
+            selectType.selectedIndex = 0;
+            localStorage.removeItem('selectedType');
+        }
+
+        else if (event.target.selectedIndex != 0) {
+            localStorage.setItem('selectedType', event.target.value);
+        }
+
+       submitButton.click();
+    });
+
+    selectType.addEventListener("change", function () {
+
+        localStorage.setItem('selectedType', event.target.value);
+        submitButton.click();
+    });
+
+
+</script>
+
+
+
